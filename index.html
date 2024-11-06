@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Performance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img src="IMG_4557.JPG" alt="Profile Picture" class="avatar">
+                <p><small>Hello Aram </small></p>
+            </div>
+            <div class="menu">
+                <a href="#" class="menu-item" title="home" onclick="showSection('homeSection')">
+                    <span class="icon">🏠</span>
+                </a>
+                <a href="#" class="menu-item" title="notifications" onclick="showSection('notificationsSection')">
+                    <span class="icon">🔔</span>
+                </a>
+                <a href="#" class="menu-item" title="analytics" onclick="showSection('analyticsSection')">
+                    <span class="icon">📈</span>
+                </a>
+                <a href="#" class="menu-item" title="settings" onclick="showSection('settingsSection')">
+                    <span class="icon">⚙️</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content Section for SPA -->
+        <div class="main-content">
+            <!-- Home Section (Dashboard) -->
+            <div id="homeSection" class="section">
+                <div class="header">
+                    <h1>Financial Performance Dashboard</h1>
+                    <div class="university-info">
+                        <img src="Cihan_En_Light.png" alt="Cihan University Logo" class="cihan-logo">
+                        <span class="department-name">Informatics and Software Engineering</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="exportData" class="button">Export Data</button>
+                    <button id="filterData" class="button">Filter Data</button>
+                    <button id="randomizeData" class="button">Randomize Data</button>
+                    <button id="resetData" class="button">Reset Data</button>
+                </div>
+
+                <div id="dateFilterContainer" class="date-filter hidden">
+                    <p>Select period:</p>
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" title="Start Date" placeholder="Start Date">
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" title="End Date" placeholder="End Date">
+                    <button onclick="applyDateFilter()">Apply</button>
+                </div>
+                
+                <!-- Cards for Summary -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Total Income</h2>
+                        </div>
+                        <div class="card-content">
+                            <span id="totalIncome" class="card-value">$250,000.00</span>
+                            <p class="card-description">+20.1% from last month</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Inquiry Success Rate</h2>
+                        </div>
+                        <div class="card-content">
+                            <span id="successRate" class="card-value">36.2%</span>
+                            <p class="card-description">+180 basis points</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>New Clients</h2>
+                        </div>
+                        <div class="card-content">
+                            <span id="newClients" class="card-value">36</span>
+                            <p class="card-description">+7 since last week</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Completed Projects</h2>
+                        </div>
+                        <div class="card-content">
+                            <span id="completedProjects" class="card-value">29</span>
+                            <p class="card-description">+2 since last month</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Section -->
+                <div class="charts">
+                    <div class="chart-container">
+                        <canvas id="inquiryBreakdown"></canvas>
+                        <p class="chart-description">Revenue Over Time</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="inquiriesPerMonth"></canvas>
+                        <p class="chart-description">Project Distribution</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="incomePerQuarter"></canvas>
+                        <p class="chart-description">Monthly New Clients</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="inquirySourceBreakdown"></canvas>
+                        <p class="chart-description">Inquiry Success Rate Trend</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="incomePerMonth"></canvas>
+                        <p class="chart-description">Project Completion Time</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="incomeSourcePerMonth"></canvas>
+                        <p class="chart-description">Client Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notificationsSection" class="section hidden">
+                <h1>Notifications</h1>
+                <ul id="notificationList">
+                    <li>New message from Client A</li>
+                    <li>Project B deadline is approaching</li>
+                </ul>
+                <button onclick="markAllAsRead()">Mark All as Read</button>
+                <button onclick="clearNotifications()">Clear All Notifications</button>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analyticsSection" class="section hidden">
+                <h1>Analytics</h1>
+                <div class="chart-container">
+                    <canvas id="analyticsChart"></canvas>
+                    <p class="chart-description">The Analytics chart provides insights into various data points, with options to toggle between different views for in-depth analysis.</p>
+                </div>
+                <button onclick="toggleChart('pie')">Show Pie Chart</button>
+                <button onclick="toggleChart('line')">Show Line Chart</button>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settingsSection" class="section hidden">
+                <h1>Settings</h1>
+                <form id="settingsForm" onsubmit="updateSettings(event)">
+                    <label for="theme">Select Theme:</label>
+                    <select id="theme" name="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                    <button type="submit">Save Settings</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

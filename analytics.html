@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img src="IMG_4557.JPG" alt="Profile Picture">
+                <p>Hello Aram</p>
+            </div>
+            <div class="menu">
+                <a href="index.html" class="menu-item" title="Home">🏠</a>
+                <a href="notifications.html" class="menu-item" title="Notifications">🔔</a>
+                <a href="analytics.html" class="menu-item active" title="Analytics">📈</a>
+                <a href="settings.html" class="menu-item" title="Settings">⚙️</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Analytics</h1>
+                <div class="university-info">
+                    <img src="Cihan_En_Light.png" alt="Cihan University Logo" class="cihan-logo">
+                    <span class="department-name">Informatics and Software Engineering</span>
+                </div>
+            </div>
+            
+            <!-- Chart Type Toggle Buttons -->
+            <div class="chart-type-buttons">
+                <button onclick="changeChartType('bar')">Bar Chart</button>
+                <button onclick="changeChartType('line')">Line Chart</button>
+                <button onclick="changeChartType('pie')">Pie Chart</button>
+            </div>
+            
+            <!-- Chart Container -->
+            <div class="chart-container">
+                <canvas id="analyticsChart"></canvas>
+            </div>
+            
+            <!-- Dashboard Link -->
+            <a href="index.html" class="button">Go to Dashboard</a>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Chart Type Toggle -->
+    <script>
+        let chartType = 'bar'; // Default chart type
+        const ctx = document.getElementById('analyticsChart').getContext('2d');
+
+        // Initial chart setup
+        let analyticsChart = new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                datasets: [{
+                    label: 'Inquiries',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to change the chart type
+        function changeChartType(type) {
+            analyticsChart.destroy(); // Destroy the current chart instance
+            analyticsChart = new Chart(ctx, {
+                type: type,
+                data: analyticsChart.data,
+                options: analyticsChart.options
+            });
+        }
+    </script>
+</body>
+</html>
